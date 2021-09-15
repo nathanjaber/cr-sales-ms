@@ -5,71 +5,17 @@ spring:
   main:
     banner-mode: "off"
   application:
-    name: ${name:apix-microservices-account}
+    name: ${name:cr-sales-ms}
   profiles:
     active: ${profiles_active:local}
   data:
     mongodb:
-      uri: ${database_mongodb_uri:mongodb://root:password@localhost:27017/account?authSource=admin&maxIdleTimeMS=15000}
+      uri: ${database_mongodb_uri:mongodb://root:password@localhost:27017/sales?authSource=admin&maxIdleTimeMS=15000}
       auto-index-creation: true
       field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
   jackson:
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: NON_NULL
-  cloud:
-    stream:
-      bindings:
-        subscribeCustomerCreated:
-          destination: x-customer-created
-          group: q-account-customer-created
-          consumer:
-            maxAttempts: 1
-
-        publishAccountCreated:
-          destination: x-account-created
-        publishAccountOperationError:
-          destination: x-account-operation-error
-
-      rabbit:
-        bindings:
-          subscribeCustomerCreated:
-            consumer:
-              ttl: ${rabbitmq_ttlInMilliseconds:3600000}
-              autoBindDlq: true
-              republishToDlq: true
-              requeueRejected: false
-              deadLetterExchange: x-account-operation-error
-              deadLetterExchangeType: fanout
-              dlqExpires: ${rabbitmq_dlqExpires:1000}
-              prefetch: ${rabbitmq_prefetch:1}
-              exchangeType: fanout
-              queueNameGroupOnly: true
-
-          publishAccountCreated:
-            producer:
-              exchangeType: fanout
-
-          publishAccountOperationError:
-            producer:
-              exchangeType: fanout
-
-      binders:
-        rabbitmq:
-          type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: ${rabbit_host:localhost}
-                port: ${rabbit_port:5672}
-                username: ${rabbit_username:guest}
-                password: ${rabbit_password:guest}
-                virtual-host: /
-
-  rabbitmq:
-    addresses: ${rabbit_addresses:localhost:5672}
-    username: ${rabbit_username:guest}
-    password: ${rabbit_password:guest}
-    virtual-host: ${rabbit_virtualhost:/}
 
 management:
   endpoint:
