@@ -1,4 +1,4 @@
-package br.com.colegiorealengo.account.commons;
+package br.com.colegiorealengo.sales.commons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
