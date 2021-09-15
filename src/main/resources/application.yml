@@ -1,55 +1,52 @@
 server:
-  port: ${port:8081}
+  port: ${port:8080}
 
 spring:
-  main:
-    banner-mode: "off"
   application:
-    name: ${name:apix-microservices-account}
-  profiles:
-    active: ${profiles_active:local}
+    name: ${name:cr-sales-ms}
   data:
     mongodb:
-      uri: ${database_mongodb_uri:mongodb://root:password@localhost:27017/account?authSource=admin&maxIdleTimeMS=15000}
+      uri: ${database_mongodb_uri:mongodb://root:password@localhost:27017/sales?authSource=admin&maxIdleTimeMS=15000}
       auto-index-creation: true
       field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
   jackson:
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: NON_NULL
+
   cloud:
     stream:
       bindings:
-        subscribeCustomerCreated:
-          destination: x-customer-created
-          group: q-account-customer-created
+        subscribeSaleValidated:
+          destination: x-sale-validated
+          group: q_sale_validated.cr-sales-ms
           consumer:
             maxAttempts: 1
 
-        publishAccountCreated:
-          destination: x-account-created
-        publishAccountOperationError:
-          destination: x-account-operation-error
+        publishSaleCreated:
+          destination: x-sale-created
+        publishSaleOperationError:
+          destination: x-sale-operation-error
 
       rabbit:
         bindings:
-          subscribeCustomerCreated:
+          subscribeSaleValidated:
             consumer:
               ttl: ${rabbitmq_ttlInMilliseconds:3600000}
               autoBindDlq: true
               republishToDlq: true
               requeueRejected: false
-              deadLetterExchange: x-account-operation-error
+              deadLetterExchange: x-sale-operation-error
               deadLetterExchangeType: fanout
               dlqExpires: ${rabbitmq_dlqExpires:1000}
               prefetch: ${rabbitmq_prefetch:1}
               exchangeType: fanout
               queueNameGroupOnly: true
 
-          publishAccountCreated:
+          publishSaleCreated:
             producer:
               exchangeType: fanout
 
-          publishAccountOperationError:
+          publishSaleOperationError:
             producer:
               exchangeType: fanout
 
