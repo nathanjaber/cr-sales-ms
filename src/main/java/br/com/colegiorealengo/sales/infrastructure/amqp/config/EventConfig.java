@@ -1,4 +1,4 @@
-package br.com.colegiorealengo.account.adapters.amqp.config;
+package br.com.colegiorealengo.sales.infrastructure.amqp.config;
 
 public class EventConfig {
 

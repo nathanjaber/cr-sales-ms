@@ -17,6 +17,61 @@ spring:
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: NON_NULL
 
+cloud:
+  stream:
+    bindings:
+      subscribeSaleValidated:
+        destination: x-sale-validated
+        group: q-sale-validated
+        consumer:
+          maxAttempts: 1
+
+      publishSaleCreated:
+        destination: x-sale-created
+      publishSaleOperationError:
+        destination: x-sale-operation-error
+
+    rabbit:
+      bindings:
+        subscribeSaleValidated:
+          consumer:
+            ttl: ${rabbitmq_ttlInMilliseconds:3600000}
+            autoBindDlq: true
+            republishToDlq: true
+            requeueRejected: false
+            deadLetterExchange: x-sale-operation-error
+            deadLetterExchangeType: fanout
+            dlqExpires: ${rabbitmq_dlqExpires:1000}
+            prefetch: ${rabbitmq_prefetch:1}
+            exchangeType: fanout
+            queueNameGroupOnly: true
+
+        publishSaleCreated:
+          producer:
+            exchangeType: fanout
+
+        publishSaleOperationError:
+          producer:
+            exchangeType: fanout
+
+    binders:
+      rabbitmq:
+        type: rabbit
+        environment:
+          spring:
+            rabbitmq:
+              host: ${rabbit_host:localhost}
+              port: ${rabbit_port:5672}
+              username: ${rabbit_username:guest}
+              password: ${rabbit_password:guest}
+              virtual-host: /
+
+  rabbitmq:
+    addresses: ${rabbit_addresses:localhost:5672}
+    username: ${rabbit_username:guest}
+    password: ${rabbit_password:guest}
+    virtual-host: ${rabbit_virtualhost:/}
+
 management:
   endpoint:
     health:

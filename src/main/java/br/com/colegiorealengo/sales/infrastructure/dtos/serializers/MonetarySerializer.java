@@ -1,4 +1,4 @@
-package br.com.colegiorealengo.account.adapters.dtos.serializers;
+package br.com.colegiorealengo.sales.infrastructure.dtos.serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
