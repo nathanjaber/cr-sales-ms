@@ -29,7 +29,7 @@ public class AmqpSaleAdapterInbound {
   }
 
   @StreamListener(target = BindConfig.SUBSCRIBE_SALE_VALIDATED)
-  public void subscribeExchangeSaleValidated(SaleAmqpDto saleAmqp) {
+  public void subscribeSaleValidated(SaleAmqpDto saleAmqp) {
     log.info("listened customer created");
     try {
       Sale sale = new Sale(

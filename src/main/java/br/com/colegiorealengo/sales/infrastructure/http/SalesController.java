@@ -62,7 +62,7 @@ public class SalesController {
     public URI buildLocation(String id) {
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/partners/{id}")
+                .path("/sales/{id}")
                 .buildAndExpand(id)
                 .toUri();
     }

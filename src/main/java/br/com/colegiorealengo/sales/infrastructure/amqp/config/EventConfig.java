@@ -1,9 +1,9 @@
 package br.com.colegiorealengo.sales.infrastructure.amqp.config;
 
-public class EventConfig {
+public final class EventConfig {
 
-  public static final String ACCOUNT_CREATION_EVENT_NAME = "AccountCreation";
-  public static final String ACCOUNT_OPERATION_ERROR_EVENT_NAME = "AccountOperationError";
+  public static final String SALE_CREATED_EVENT_NAME = "SaleCreated";
+  public static final String SALE_OPERATION_ERROR_EVENT_NAME = "SaleOperationError";
 
   private EventConfig() {}
 }

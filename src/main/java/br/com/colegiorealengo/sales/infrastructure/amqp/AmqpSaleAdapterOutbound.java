@@ -1,6 +1,7 @@
 package br.com.colegiorealengo.sales.infrastructure.amqp;
 
 import br.com.colegiorealengo.commons.errors.domains.DefaultErrorResponse;
+import br.com.colegiorealengo.commons.headers.DefaultHeader;
 import br.com.colegiorealengo.sales.domain.Sale;
 import br.com.colegiorealengo.sales.infrastructure.amqp.config.BrokerOutput;
 import br.com.colegiorealengo.sales.infrastructure.amqp.config.EventConfig;
@@ -13,9 +14,6 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-
-import static br.com.colegiorealengo.commons.headers.DefaultHeader.APP_ID_HEADER_NAME;
-import static br.com.colegiorealengo.commons.headers.DefaultHeader.EVENT_NAME_HEADER_HEADER;
 
 @Slf4j
 @Service
@@ -48,7 +46,7 @@ public class AmqpSaleAdapterOutbound implements AmqpPort {
             sale.isValidated()
     );
 
-    sendMessage(output.publishSaleCreated(), saleAmqpDto, EventConfig.ACCOUNT_CREATION_EVENT_NAME);
+    sendMessage(output.publishSaleCreated(), saleAmqpDto, EventConfig.SALE_CREATED_EVENT_NAME);
 
     log.info("Sale {} published",
             sale.getId());
@@ -57,18 +55,13 @@ public class AmqpSaleAdapterOutbound implements AmqpPort {
   @Override
   public void publishSaleOperationError(DefaultErrorResponse errorResponse) {
     log.error("error in sales creation");
-    sendMessage(output.publishSaleOperationError(), errorResponse, EventConfig.ACCOUNT_OPERATION_ERROR_EVENT_NAME);
-  }
-
-  private void sendMessage(MessageChannel channel, SaleAmqpDto saleAmqpDto, String eventName) {
-    sendMessage(channel, saleAmqpDto, eventName);
+    sendMessage(output.publishSaleOperationError(), errorResponse, EventConfig.SALE_OPERATION_ERROR_EVENT_NAME);
   }
 
   private void sendMessage(MessageChannel channel, Object object, String eventName) {
-    channel.send(
-        MessageBuilder.withPayload(object)
-            .setHeader(EVENT_NAME_HEADER_HEADER, eventName)
-            .setHeader(APP_ID_HEADER_NAME, appId)
+    channel.send(MessageBuilder.withPayload(object)
+            .setHeader(DefaultHeader.EVENT_NAME_HEADER_HEADER, eventName)
+            .setHeader(DefaultHeader.APP_ID_HEADER_NAME, appId)
             .build());
   }
 }

@@ -2,8 +2,6 @@ package br.com.colegiorealengo.sales.infrastructure.dtos;
 
 import br.com.colegiorealengo.sales.infrastructure.dtos.serializers.MonetarySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -11,24 +9,24 @@ import java.math.BigDecimal;
 
 public class SaleDto {
 
-    private String id;
+    private final String id;
 
-    private String customerDocumentNumber;
+    private final String customerDocumentNumber;
 
-    private String customerFirstName;
+    private final String customerFirstName;
 
-    private String customerLastName;
+    private final String customerLastName;
 
-    private String customerCardNumber;
+    private final String customerCardNumber;
 
-    private String productId;
+    private final String productId;
 
-    private boolean validated;
+    private final Boolean validated;
 
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     @DecimalMin(value = "0.0", inclusive = false)
     @JsonSerialize(using = MonetarySerializer.class)
-    private BigDecimal value;
+    private final BigDecimal value;
 
     public SaleDto(String id,
                    String customerDocumentNumber,
@@ -36,7 +34,7 @@ public class SaleDto {
                    String customerLastName,
                    String customerCardNumber,
                    String productId,
-                   boolean validated,
+                   Boolean validated,
                    BigDecimal value) {
         this.id = id;
         this.customerDocumentNumber = customerDocumentNumber;
@@ -46,5 +44,37 @@ public class SaleDto {
         this.productId = productId;
         this.validated = validated;
         this.value = value;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCustomerDocumentNumber() {
+        return customerDocumentNumber;
+    }
+
+    public String getCustomerFirstName() {
+        return customerFirstName;
+    }
+
+    public String getCustomerLastName() {
+        return customerLastName;
+    }
+
+    public String getCustomerCardNumber() {
+        return customerCardNumber;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public BigDecimal getValue() {
+        return value;
     }
 }

@@ -2,11 +2,13 @@ package br.com.colegiorealengo.sales.domain;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
+@Document(collection = "sales")
 public class Sale {
 
     @Id
@@ -28,6 +30,9 @@ public class Sale {
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal value;
+
+    public Sale() {
+    }
 
     public Sale(String id,
                 String customerDocumentNumber,
@@ -93,4 +98,6 @@ public class Sale {
     public boolean isValidated() {
         return validated;
     }
+
+
 }
