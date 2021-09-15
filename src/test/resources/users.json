@@ -1,0 +1,39 @@
+[
+  {
+    "id": "887816e0-59fc-4dd3-a1dc-40f70fe1c650",
+    "name": "Usuário 01",
+    "email": "usuario01@sensedia.com",
+    "status": "ACTIVE",
+    "createdAt": "2020-03-21T16:07:44.260405800Z",
+    "updatedAt": "2020-03-22T16:07:44.260405800Z"
+  },
+  {
+    "id": "7acbc939-affc-4300-bc37-d51d97999601",
+    "name": "Usuário 04",
+    "email": "usuario04@sensedia.com",
+    "status": "DISABLE",
+    "createdAt": "2020-03-24T16:09:16.944345Z"
+  },
+  {
+    "id": "620dac34-15e1-4375-8be8-e9a46d1f5a36",
+    "name": "Usuário 03",
+    "email": "usuario03@sensedia.com",
+    "status": "ACTIVE",
+    "createdAt": "2020-03-23T16:09:01.035853900Z",
+    "updatedAt": "2020-03-26T16:09:01.035853900Z"
+  },
+  {
+    "id": "83aba3f0-aa80-4e18-8081-5ae5447f72a2",
+    "name": "Usuário 05",
+    "email": "usuario05@sensedia.com",
+    "status": "ACTIVE",
+    "createdAt": "2020-03-24T16:09:34.687643300Z"
+  },
+  {
+    "id": "f634ba42-45bc-4101-a1b3-4709a53f65ef",
+    "name": "Usuário 02",
+    "email": "usuario02@sensedia.com",
+    "status": "ACTIVE",
+    "createdAt": "2020-03-22T16:08:37.407423700Z"
+  }
+]
